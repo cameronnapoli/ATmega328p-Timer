@@ -1,5 +1,3 @@
-// Cameron Napoli, 73223093
-// CS145L Lab 4
 
 #define F_CPU 16000000UL
 #define BAUD 9600
@@ -72,10 +70,10 @@ void LcdInit() {
 void updateLCD(int value) { // updates to LCD with maximum 3 digit value
 	LcdCmdWrite(0x01); // clear display
 	LcdCmdWrite(0x02); // reset cursor
-	
+
 	char buffer[3];
 	sprintf( buffer, "%d", value );
-	
+
 	short i;
 	for(i = 0; i < 3; i++)
 		if(buffer[i] >= 48 && buffer[i] <= 57)
@@ -127,7 +125,7 @@ ISR(TIMER0_COMPA_vect) {
 		case NewMaybe:
 			if(PIND & (1<<PIND3)) { // Trigger to change state in state machine
 				PushState = JustPushed;
-				
+
 				switch (StopwatchMode) {
 					case RESET_MODE:
 						StopwatchMode = COUNT_MODE;
@@ -142,7 +140,7 @@ ISR(TIMER0_COMPA_vect) {
 						updateLCD(0);
 						break;
 				}
-				
+
 			} else {
 				PushState = NotPushed;
 			}
@@ -169,7 +167,7 @@ ISR(TIMER0_COMPA_vect) {
 			}
 			break;
 	}
-	
+
 }
 
 
@@ -185,7 +183,7 @@ ISR(TIMER1_COMPA_vect) {
 
 
 int main() {
-	
+
 	DDRC |= 0x3f; // LCD Control pins
 
 	// Init LCD
